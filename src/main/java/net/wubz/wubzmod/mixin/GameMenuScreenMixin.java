@@ -14,7 +14,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class GameMenuScreenMixin extends Screen {
     protected GameMenuScreenMixin(Text menu) { super(menu); }
 
-
     @Inject(at = @At("HEAD"), method = "initWidgets")
     private void onInitWigets(CallbackInfo ci){
         this.addDrawableChild(new ButtonWidget(10, 10, 90, 20, Text.translatable("Wubz's Tools"), (button) ->{

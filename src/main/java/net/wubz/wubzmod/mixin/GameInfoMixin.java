@@ -15,9 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = InGameHud.class)
 public class GameInfoMixin {
-
     private ModHud hudInfo;
-
 
     @Inject(method = "<init>(Lnet/minecraft/client/MinecraftClient;Lnet/minecraft/client/render/item/ItemRenderer;)V", at = @At(value = "RETURN"))
     private void onInit(MinecraftClient client, ItemRenderer render, CallbackInfo ci) {
@@ -26,8 +24,6 @@ public class GameInfoMixin {
 
     @Inject(method = "render", at = @At("HEAD"))
     private void onDraw(MatrixStack matrixStack, float esp, CallbackInfo ci) {
-        if (WubzMod.hud) {
-            this.hudInfo.draw(matrixStack);
-        }
+        this.hudInfo.draw(matrixStack);
     }
 }

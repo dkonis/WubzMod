@@ -7,10 +7,7 @@ import org.slf4j.LoggerFactory;
 
 public class WubzMod implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger("wubzmod");
-    public static String colorName = "\u00a7cWubz\u00a78Mod";
-
-    public static boolean hud = true;
-    public static boolean hudCoords = true;
+    public static boolean LiveOverflowBypass = true;
 
 
     public static boolean Flying = false;
