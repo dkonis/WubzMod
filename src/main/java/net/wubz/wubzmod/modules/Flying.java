@@ -1,5 +1,6 @@
 package net.wubz.wubzmod.modules;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
@@ -26,6 +27,18 @@ public class Flying {
             WubzMod.instance.player.getAbilities().allowFlying = true;
         }
 
+        if(WubzMod.instance.player.hasVehicle()){
+            Entity vehicle = WubzMod.instance.player.getVehicle();
+            Vec3d velocity = vehicle.getVelocity();
+            double motionY = 0;
+            if(WubzMod.instance.options.jumpKey.isPressed())
+                motionY = 0.3;
+            else if (WubzMod.instance.options.backKey.isPressed()) {
+                motionY = -0.3;
+            }
+            vehicle.setVelocity(new Vec3d(velocity.getX(), motionY, velocity.getZ()));
+        }
+
         if(counter==0 && !WubzMod.instance.player.isOnGround()) {
             ClientConnection conn = WubzMod.instance.player.networkHandler.getConnection();
             Vec3d pos =  WubzMod.instance.player.getPos().subtract(0.0, FALL_PACKET, 0.0);
@@ -34,7 +47,7 @@ public class Flying {
         }
 
         if(counter == 0)
-            counter = 20;
+            counter = 10;
         counter --;
 
     }

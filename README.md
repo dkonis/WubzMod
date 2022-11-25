@@ -4,9 +4,14 @@
 [![Minecraft: Fabric](https://img.shields.io/badge/Minecraft-Fabric-green.svg)](https://fabricmc.net)
 ## Features
 - LiveOverflow Bypass - allows you to play in LiveOverflow's Server.
-- Flying Hack - let you to fly in Minecraft-Survival.
-- XRay Hack - let you to view only valuable blocks.
+- Dynamic Teleport Hack - teleports to the player's view direction.
+- Flying Hack - let the player fly in Minecraft-Survival.
+- No Fall Damage Hack - prevent the player from taking fall damage.
+- XRay Hack - let the player view only valuable blocks.
 - GigaChad Hack - general status effect bonuses.
 
 ## Installation
-To install WubzMod check [Releases](https://github.com/dkonis/WubzMod/releases)
+To install WubzMod check [Releases](https://github.com/dkonis/WubzMod/releases).
+
+## License
+Distributed under the MIT License. See [LICENSE](https://github.com/dkonis/WubzMod/blob/main/LICENSE) for more information.
