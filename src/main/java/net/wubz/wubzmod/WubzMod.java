@@ -22,6 +22,11 @@ public class WubzMod implements ModInitializer {
             return Text.translatable(modName + " \u00a7cDisabled");
     }
 
+    public static double roundCoordinate(double n) {
+        n = Math.round(n * 100) / 100d;
+        return Math.nextAfter(n, n + Math.signum(n));
+    }
+
     public static MinecraftClient instance = MinecraftClient.getInstance();
 
 

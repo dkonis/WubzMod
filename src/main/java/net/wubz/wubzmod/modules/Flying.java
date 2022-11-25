@@ -9,7 +9,7 @@ import net.wubz.wubzmod.WubzMod;
 
 public class Flying {
     private static int counter = 0;
-    private final static double FALL_PACKET = 0.2;
+    private final static double FALL_PACKET = 0.1;
 
     public static void Flying(){
         if(WubzMod.instance.player!=null && WubzMod.Flying) {
@@ -47,7 +47,7 @@ public class Flying {
         }
 
         if(counter == 0)
-            counter = 10;
+            counter = 20;
         counter --;
 
     }

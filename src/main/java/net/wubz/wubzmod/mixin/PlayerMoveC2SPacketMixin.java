@@ -12,15 +12,11 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(PlayerMoveC2SPacket.Full.class)
 public abstract class PlayerMoveC2SPacketMixin {
-    private static double roundCoordinate(double n) {
-        n = Math.round(n * 100) / 100d;
-        return Math.nextAfter(n, n + Math.signum(n));
-    }
     @ModifyArgs(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/packet/c2s/play/PlayerMoveC2SPacket;<init>(DDDFFZZZ)V"))
     private static void init(Args args) {
         if(WubzMod.LiveOverflowBypass) {
-            args.set(0, roundCoordinate(args.get(0)));
-            args.set(2, roundCoordinate(args.get(2)));
+            args.set(0, WubzMod.roundCoordinate(args.get(0)));
+            args.set(2, WubzMod.roundCoordinate(args.get(2)));
         }
     }
 }
