@@ -2,10 +2,10 @@ package net.wubz.wubzmod.gui;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.SliderWidget;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
 import net.wubz.wubzmod.WubzMod;
@@ -16,18 +16,12 @@ import java.util.Objects;
 public class ModOptions extends Screen {
     private final Screen parent;
     private final GameOptions settings;
+    private static int TPDistance = 0;
 
     public ModOptions(Screen parent, GameOptions gameOptions) {
         super(Text.translatable("Wubz's Tools"));
         this.parent = parent;
         this.settings = gameOptions;
-    }
-
-    MutableText ModText(boolean modEnabled,String modName) {
-        if(modEnabled)
-            return Text.translatable(modName + " \u00a7aEnabled");
-        else
-            return Text.translatable(modName + " \u00a7cDisabled");
     }
 
     protected void init() {
@@ -36,28 +30,48 @@ public class ModOptions extends Screen {
             this.client.setScreen(this.parent);
         }));
 
-        this.addDrawableChild(new ButtonWidget(this.width / 2 - 100, this.height / 6 + 25, 60, 20, Text.translatable("TP X"), (button) -> {
+        this.addDrawableChild(new ButtonWidget(this.width / 2 - 102, this.height / 6 + 25, 98, 20, Text.translatable("Teleport"), (button) -> {
+            assert WubzMod.instance.player != null;
+            String direction = WubzMod.instance.player.getHorizontalFacing().asString();
+            float pitch = WubzMod.instance.player.getPitch();
+            WubzMod.LOGGER.info(direction + WubzMod.instance.player.getPitch());
             Vec3d pos =  WubzMod.instance.player.getPos();
-            WubzMod.instance.player.setPos(pos.getX()+ 5, pos.getY(), pos.getZ());
-            WubzMod.instance.player.kill();
+            switch (direction) {
+                case "south" -> WubzMod.instance.player.setPos(pos.getX(), pos.getY(), pos.getZ() + TPDistance);
+                case "west" -> WubzMod.instance.player.setPos(pos.getX() - TPDistance, pos.getY(), pos.getZ());
+                case "north" -> WubzMod.instance.player.setPos(pos.getX(), pos.getY(), pos.getZ() - TPDistance);
+                case "east" -> WubzMod.instance.player.setPos(pos.getX() + TPDistance, pos.getY(), pos.getZ());
+            }
+            if(pitch <= -60.0)
+                WubzMod.instance.player.setPos(pos.getX(), pos.getY() + TPDistance, pos.getZ());
+            else if(pitch >= 60.0) {
+                WubzMod.instance.player.setPos(pos.getX(), pos.getY() - TPDistance, pos.getZ());
+            }
         }));
 
-        this.addDrawableChild(new ButtonWidget(this.width / 2 - 30, this.height / 6 + 25, 60, 20, Text.translatable("TP Y"), (button) -> {
-            Vec3d pos =  WubzMod.instance.player.getPos();
-            WubzMod.instance.player.setPos(pos.getX(), pos.getY() + 5, pos.getZ() + 5);
-        }));
+        this.addDrawableChild(new SliderWidget(this.width / 2 + 4, this.height / 6 + 25, 98, 20, Text.translatable("TP Distance: " + TPDistance), (float) (TPDistance / 20)) {
+            @Override
+            protected void updateMessage() {
+                this.setMessage(Text.translatable("TP Distance: " + TPDistance));
+            }
 
-        this.addDrawableChild(new ButtonWidget(this.width / 2 + 40, this.height / 6 + 25, 60, 20, Text.translatable("TP Z"), (button) -> {
-            Vec3d pos =  WubzMod.instance.player.getPos();
-            WubzMod.instance.player.setPos(pos.getX(), pos.getY(), pos.getZ() + 5);
-        }));
+            @Override
+            protected void applyValue() {
+                TPDistance = (int) (this.value * 20);
+            }
+        });
 
-        this.addDrawableChild(new ButtonWidget(this.width / 2 - 100, this.height / 6 + 50, 200, 20, ModText(WubzMod.Flying, "Flying hack:"), (button) -> {
+        this.addDrawableChild(new ButtonWidget(this.width / 2 - 102, this.height / 6 + 50, 98, 20, WubzMod.ModuleStateText(WubzMod.Flying, "Flying:"), (button) -> {
             WubzMod.Flying = !WubzMod.Flying;
-            button.setMessage(ModText(WubzMod.Flying, "Flying hack:"));
+            button.setMessage(WubzMod.ModuleStateText(WubzMod.Flying, "Flying:"));
         }));
 
-        this.addDrawableChild(new ButtonWidget(this.width / 2 - 100, this.height / 6 + 75, 200, 20, ModText(WubzMod.XRay, "XRay hack:"), (button) -> {
+        this.addDrawableChild(new ButtonWidget(this.width / 2 + 4, this.height / 6 + 50, 98, 20, WubzMod.ModuleStateText(WubzMod.NoFallDamage, "NoFall:"), (button) -> {
+            WubzMod.NoFallDamage = !WubzMod.NoFallDamage;
+            button.setMessage(WubzMod.ModuleStateText(WubzMod.NoFallDamage, "NoFall:"));
+        }));
+
+        this.addDrawableChild(new ButtonWidget(this.width / 2 - 102, this.height / 6 + 75, 204, 20, WubzMod.ModuleStateText(WubzMod.XRay, "XRay:"), (button) -> {
             assert client != null;
             if(client.worldRenderer.isTerrainRenderComplete()) {
                 WubzMod.XRay = !WubzMod.XRay;
@@ -69,14 +83,14 @@ public class ModOptions extends Screen {
                     WubzMod.instance.player.removeStatusEffect(StatusEffect.byRawId(16));
                 }
                 client.worldRenderer.reload();
-                button.setMessage(ModText(WubzMod.XRay, "XRay hack:"));
+                button.setMessage(WubzMod.ModuleStateText(WubzMod.XRay, "XRay:"));
             }
         }));
 
-        this.addDrawableChild(new ButtonWidget(this.width / 2 - 100, this.height / 6 + 100, 200, 20, ModText(WubzMod.GigaChad, "GigaChad hack:"), (button) -> {
+        this.addDrawableChild(new ButtonWidget(this.width / 2 - 102, this.height / 6 + 100, 204, 20, WubzMod.ModuleStateText(WubzMod.GigaChad, "GigaChad mode:"), (button) -> {
             WubzMod.GigaChad = !WubzMod.GigaChad;
             GigaChad.GigaChad();
-            button.setMessage(ModText(WubzMod.GigaChad, "GigaChad hack:"));
+            button.setMessage(WubzMod.ModuleStateText(WubzMod.GigaChad, "GigaChad mode:"));
         }));
 
     }
