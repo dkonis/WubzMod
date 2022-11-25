@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MinecraftClientMixin {
     @Inject(at = @At("TAIL"), method = "tick")
     private void tick(CallbackInfo ci) {
-        Flying.Flying();
-        NoFallDamage.NoFall();
+        Flying.ModuleState();
+        NoFallDamage.ModuleState();
     }
 }

@@ -11,25 +11,25 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public class VehicleMoveC2SPacketMixin {
 
     @Redirect(method = "<init>(Lnet/minecraft/entity/Entity;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;getX()D"))
-    public double getRoundX(Entity instance)
+    public double getRoundX(Entity entity)
     {
         if (WubzMod.LiveOverflowBypass) {
-            return WubzMod.roundCoordinate(instance.getX());
+            return WubzMod.roundCoordinate(entity.getX());
         }
         else
         {
-            return instance.getX();
+            return entity.getX();
         }
     }
 
     @Redirect(method = "<init>(Lnet/minecraft/entity/Entity;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;getZ()D"))
-    public double getRoundZ(Entity instance) {
+    public double getRoundZ(Entity entity) {
         if (WubzMod.LiveOverflowBypass) {
-            return WubzMod.roundCoordinate(instance.getZ());
+            return WubzMod.roundCoordinate(entity.getZ());
         }
         else
         {
-            return instance.getX();
+            return entity.getX();
         }
     }
 }

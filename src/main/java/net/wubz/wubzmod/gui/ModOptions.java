@@ -89,7 +89,7 @@ public class ModOptions extends Screen {
 
         this.addDrawableChild(new ButtonWidget(this.width / 2 - 102, this.height / 6 + 100, 204, 20, WubzMod.ModuleStateText(WubzMod.GigaChad, "GigaChad mode:"), (button) -> {
             WubzMod.GigaChad = !WubzMod.GigaChad;
-            GigaChad.GigaChad();
+            GigaChad.ModuleState();
             button.setMessage(WubzMod.ModuleStateText(WubzMod.GigaChad, "GigaChad mode:"));
         }));
 

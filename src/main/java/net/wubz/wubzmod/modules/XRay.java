@@ -8,7 +8,7 @@ import java.util.HashSet;
 public class XRay {
     private static final HashSet<String> blocksToRender = new HashSet<>();
 
-    public static boolean XRay(BlockState state){
+    public static boolean ModuleState(BlockState state){
 
         if(WubzMod.instance.player!=null && WubzMod.instance.options!=null && WubzMod.XRay){
             Blocks();

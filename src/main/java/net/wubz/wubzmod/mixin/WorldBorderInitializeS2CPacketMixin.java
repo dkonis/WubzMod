@@ -2,7 +2,7 @@ package net.wubz.wubzmod.mixin;
 
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.WorldBorderInitializeS2CPacket;
-import net.wubz.wubzmod.WubzMod;
+import net.wubz.wubzmod.modules.LiveOverflowBypass;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,7 +19,7 @@ public class WorldBorderInitializeS2CPacketMixin {
      */
     @Inject(at = @At("HEAD") , method = "apply", cancellable = true)
     public void apply(ClientPlayPacketListener clientPlayPacketListener, CallbackInfo ci) {
-        if(WubzMod.LiveOverflowBypass)
+        if(LiveOverflowBypass.WorldBorderBypass())
             ci.cancel();
     }
 }
