@@ -11,8 +11,9 @@
     "GameInfoMixin",
     "MinecraftClientMixin",
     "BlockMixin",
-    "PlayerMoveC2SPacketMixin",
-    "PlayerC2SPacketPositionAndOnGroundMixin",
+    "PlayerMoveC2SPacketFullMixin",
+    "PlayerMoveC2SPacketPositionAndOnGroundMixin",
+    "VehicleMoveC2SPacketMixin",
     "GameStateChangeS2CPacketMixin",
     "WorldBorderInitializeS2CPacketMixin"
   ],

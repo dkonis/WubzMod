@@ -4,7 +4,7 @@ import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.wubz.wubzmod.WubzMod;
 
 public class NoFallDamage {
-    public static void NoFall(){
+    public static void ModuleState(){
         if(WubzMod.instance.player!=null && WubzMod.NoFallDamage)
         {
             enableNoFall();

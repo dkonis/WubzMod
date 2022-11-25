@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class GigaChad {
 
-    public static void GigaChad(){
+    public static void ModuleState(){
         if(WubzMod.instance.player!=null && WubzMod.GigaChad)
             enableGigaChad();
         if(WubzMod.instance.player!=null && !WubzMod.GigaChad)

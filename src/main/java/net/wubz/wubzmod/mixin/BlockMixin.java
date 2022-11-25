@@ -16,6 +16,6 @@ public class BlockMixin {
     @Inject(at = @At("Return"), method = "shouldDrawSide", cancellable = true)
     private static void shouldRenderFace(BlockState state, BlockView world, BlockPos pos, Direction face,
                                             BlockPos blockPos, CallbackInfoReturnable<Boolean> ci) {
-        ci.setReturnValue(XRay.XRay(state));
+        ci.setReturnValue(XRay.ModuleState(state));
     }
 }

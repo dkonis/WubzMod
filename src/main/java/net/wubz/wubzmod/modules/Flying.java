@@ -9,9 +9,9 @@ import net.wubz.wubzmod.WubzMod;
 
 public class Flying {
     private static int counter = 0;
-    private final static double FALL_PACKET = 0.2;
+    private final static double FALL_PACKET = 0.1;
 
-    public static void Flying(){
+    public static void ModuleState(){
         if(WubzMod.instance.player!=null && WubzMod.Flying) {
             enableFlying();
         }
@@ -29,6 +29,7 @@ public class Flying {
 
         if(WubzMod.instance.player.hasVehicle()){
             Entity vehicle = WubzMod.instance.player.getVehicle();
+            assert vehicle != null;
             Vec3d velocity = vehicle.getVelocity();
             double motionY = 0;
             if(WubzMod.instance.options.jumpKey.isPressed())
@@ -47,7 +48,7 @@ public class Flying {
         }
 
         if(counter == 0)
-            counter = 10;
+            counter = 20;
         counter --;
 
     }
